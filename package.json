@@ -7,6 +7,8 @@
   "author": "hannq",
   "license": "MIT",
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-json": "^4.1.0",
     "@craco/craco": "^6.4.3",
     "@dr.pogodin/babel-plugin-react-css-modules": "^6.5.4",
     "@dr2009/craco-less": "^1.21.3",
@@ -26,7 +28,8 @@
     "postcss": "^8.4.5",
     "postcss-less": "^5.0.0",
     "react-scripts": "^5.0.0",
-    "typescript": "^4.5.4"
+    "typescript": "^4.5.4",
+    "rollup-plugin-typescript2": "^0.31.1"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
