@@ -1,0 +1,27 @@
+.options-wrapper {
+  padding: 20px 14px;
+  max-width: 60%;
+  margin: 0 auto;
+  h1 {
+    text-align: center;
+  }
+  .content-wrapper {
+    width: 100%;
+    :global(.@{ant-prefix}-form-item-label) {
+      min-width: 10em;
+    }
+    .label-wrapper {
+      display: flex;
+      align-items: center;
+      .label-text {}
+      .label-icon {
+        padding-left: 6px;
+        cursor: pointer;
+      }
+    }
+  }
+  .btn-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "Api2Code",
+  "description": "A Yapi to TypeScript tool.",
+  "version": "0.0.0.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
+  "cross_origin_embedder_policy": { "value": "require-corp" },
+  "cross_origin_opener_policy": { "value": "same-origin-allow-popups" },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "notifications",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*\/*"
+  ],
+  "action": {
+    "default_title": "Yapi to TypeScript",
+    "default_icon": "assets/images/icon128.png",
+    "default_popup": "index.html#/popup"
+  },
+  "options_page": "index.html#/options",
+  "background": {
+    "service_worker": "background.js"
+  }
+}
