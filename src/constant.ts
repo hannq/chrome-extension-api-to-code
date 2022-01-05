@@ -15,11 +15,25 @@ export enum Theme {
 }
 
 /** 拷贝专用事件集 */
-export enum CopyEventName {
-  COPY_PAGE_READY = 'COPY_EVENT#COPY_PAGE_READY',
-  COPY_CODE = 'COPY_EVENT#COPY_CODE',
-  COPY_CODE_FINISHED = 'COPY_EVENT#COPY_CODE_FINISHED',
-  COPY_CODE_FAILED = 'COPY_EVENT#COPY_CODE_FAILED',
+export enum NewWindowCopyEventName {
+  /** 拷贝页面准备完毕 */
+  COPY_PAGE_READY = 'NEW_WINDOW_COPY#COPY_PAGE_READY',
+  /** 拷贝代码 */
+  COPY_CODE = 'NEW_WINDOW_COPY#COPY_CODE',
+  /** 拷贝代码完毕 */
+  COPY_CODE_FINISHED = 'NEW_WINDOW_COPY#COPY_CODE_FINISHED',
+  /** 拷贝代码失败 */
+  COPY_CODE_FAILED = 'NEW_WINDOW_COPY#COPY_CODE_FAILED',
+}
+
+/** extension msg 事件集 */
+export enum ExtensionMsgEventName {
+  /** 执行新窗口拷贝操作 */
+  RUN_NEW_WINDOW_COPY = 'EXTENSION_MSG_EVENT_NAME#RUN_NEW_WINDOW_COPY',
+  /** 生成代码 */
+  GENERATE_CODE = 'EXTENSION_MSG_EVENT_NAME#GENERATE_CODE',
+  /** 生成代码 */
+  AUTO_COPY = 'EXTENSION_MSG_EVENT_NAME#AUTO_COPY',
 }
 
 /** eventBus 事件集 */
@@ -31,6 +45,8 @@ export enum EventBusEventName {
   STORAGE_CHANGE = 'EVENT_BUS_EVENT#STORAGE_CHANGE',
   /** theme change event */
   THEME_CHANGE = 'EVENT_BUS_EVENT#THEME_CHANGE',
-  /** theme change event */
+  /** service worker event */
   SERVICE_WORKER_MSG = 'EVENT_BUS_EVENT#SERVICE_WORKER_MSG',
+  /** extension event */
+  EXTENSION_MSG = 'EVENT_BUS_EVENT#EXTENSION_MSG',
 }

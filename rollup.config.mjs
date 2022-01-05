@@ -13,53 +13,51 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const isPrd = process.env.NODE_ENV === 'production';
 
-export default [
-  {
-    input: path.join(__dirname, 'src/background.ts'),
-    external: [],
-    plugins: [
-      json({
-        namedExports: false
-      }),
-      ts({
-        check: true,
-        tsconfig: path.resolve(__dirname, 'tsconfig.json'),
-        cacheRoot: path.resolve(__dirname, 'node_modules/.rts2_cache'),
-        tsconfigOverride: {
-          compilerOptions: {
-            sourceMap: !!process.env.SOURCE_MAP,
-            declaration: false,
-            declarationMap: false
-          },
-          exclude: ['src/test.ts']
-        }
-      }),
-      commonjs({
-        sourceMap: false,
-      }),
-      nodeResolve({}),
-      ...(isPrd ? [
-        terser({
-          module: false,
-          compress: {
-            ecma: 2015,
-            pure_getters: true
-          },
-          safari10: true
-        })
-      ] : [])
-    ],
-    output: {
-      file: path.join(__dirname, `build/background.js`),
-      format: `iife`,
-    },
-    onwarn: (msg, warn) => {
-      if (!/Circular/.test(msg)) {
-        warn(msg)
+export default ['background', 'contentScript'].map(name => ({
+  input: path.join(__dirname, `src/${name}/index.ts`),
+  external: [],
+  plugins: [
+    json({
+      namedExports: false
+    }),
+    ts({
+      check: true,
+      tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+      cacheRoot: path.resolve(__dirname, 'node_modules/.rts2_cache'),
+      tsconfigOverride: {
+        compilerOptions: {
+          sourceMap: !!process.env.SOURCE_MAP,
+          declaration: false,
+          declarationMap: false
+        },
+        exclude: ['src/test.ts']
       }
-    },
-    treeshake: {
-      moduleSideEffects: false
+    }),
+    commonjs({
+      sourceMap: false,
+    }),
+    nodeResolve({}),
+    ...(isPrd ? [
+      terser({
+        module: false,
+        compress: {
+          ecma: 2015,
+          pure_getters: true
+        },
+        safari10: true
+      })
+    ] : [])
+  ],
+  output: {
+    file: path.join(__dirname, `build/${name}.js`),
+    format: `iife`,
+  },
+  onwarn: (msg, warn) => {
+    if (!/Circular/.test(msg)) {
+      warn(msg)
     }
+  },
+  treeshake: {
+    moduleSideEffects: false
   }
-]
+}))

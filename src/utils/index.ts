@@ -1,4 +1,6 @@
 import type JSTT from 'json-schema-to-typescript';
+import type { GetApiDataByIdResSuccess, GetApiDataByIdResFailed } from '@/types';
+export * from './urlParser';
 
 declare const jstt: typeof JSTT;
 
@@ -11,26 +13,12 @@ export function formatComment2SingleLine(content = '') {
   return content.replace(/\/\*([^/]*)\*\//mg, (_, p1) => `/** ${p1.replace(/[*\s\n]/gm, '')} */`)
 }
 
-interface GetYapiDataByIdResSuccess {
-  meta: Record<'method' | 'path' | 'title', string>;
-  reqSchema: object;
-  resSchema: object;
-  err: null;
-}
-
-interface GetYapiDataByIdResFailed {
-  meta: null;
-  reqSchema: null;
-  resSchema: null;
-  err: Error;
-}
-
 /**
  * 获取 YApi 接口详情
  * @param prefix 地址前缀
  * @param id yapi项目id
  */
-export async function getYapiDataById(prefix: string, id: string): Promise<GetYapiDataByIdResSuccess | GetYapiDataByIdResFailed> {
+export async function getYapiDataById(prefix: string, id: string): Promise<GetApiDataByIdResSuccess | GetApiDataByIdResFailed> {
   const res = await fetch(`${prefix}/api/interface/get?id=${id}`, {
     "headers": {
       "accept": "application/json, text/plain, */*",
@@ -92,6 +80,77 @@ export async function getYapiDataById(prefix: string, id: string): Promise<GetYa
   }
 }
 
+
+export async function getSwaggerData(prefix: string, id: string, method: string): Promise<GetApiDataByIdResSuccess | GetApiDataByIdResFailed> {
+  try {
+    const swaggerResourcesRes = await fetch(`${prefix}/swagger-resources`, {
+      "headers": {
+        "accept": "application/json",
+        "accept-language": "zh-CN,zh;q=0.9",
+        "cache-control": "no-cache",
+        "content-type": "application/json",
+      },
+      "body": null,
+      "method": "GET",
+      "mode": "cors",
+      "credentials": "include"
+    }).then(res => res.json());
+    const apiDocsPath = swaggerResourcesRes?.[0]?.location;
+    if (apiDocsPath) {
+      const res = await fetch(`${prefix}/${apiDocsPath}`, {
+        "headers": {
+          "accept": "application/json,*/*",
+          "accept-language": "zh-CN,zh;q=0.9",
+          "cache-control": "no-cache",
+          "pragma": "no-cache",
+          "sec-ch-ua": "\" Not A;Brand\";v=\"99\", \"Chromium\";v=\"96\", \"Google Chrome\";v=\"96\"",
+          "sec-ch-ua-mobile": "?0",
+          "sec-ch-ua-platform": "\"macOS\"",
+          "sec-fetch-dest": "empty",
+          "sec-fetch-mode": "cors",
+          "sec-fetch-site": "same-origin"
+        },
+        "referrer": "https://mcyg.taoljt.com/mbff/swagger-ui.html",
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": null,
+        "method": "GET",
+        "mode": "cors",
+        "credentials": "include"
+      }).then(res => res.json());
+      if (res?.error || !res?.paths || !res?.definitions) throw new Error(`获取 swagger 接口列表信息失败`);
+      const { paths, definitions } = res
+      const target = Object.entries(paths).find(([, info]: [string, any]) => info?.[method]?.operationId === id) as [string, any] | null;
+      if (target) {
+        const [path, info] = target;
+        const rawReqSchema = info?.[method]?.parameters?.[1]?.schema;
+        const rawResSchema = info?.[method]?.responses?.[200]?.schema;
+        const reqRef = rawReqSchema?.originalRef;
+        const resRef = rawResSchema?.originalRef;
+        definitions.List = definitions.List || {}
+        const reqSchema = reqRef ? { ...definitions[reqRef], definitions } : { ...rawReqSchema, definitions};
+        const resSchema = resRef ? { ...definitions[resRef], definitions } : { ...rawResSchema, definitions };
+        delete reqSchema.title;
+        delete resSchema.title;
+
+        return {
+          meta: { method, path, title: info?.[method]?.summary || '' },
+          reqSchema,
+          resSchema,
+          err: null
+        }
+      } throw new Error(`未找到指定接口`)
+    } else throw new Error('获取 swagger api docs 地址失败');
+  } catch (err) {
+    console.error(err);
+    return {
+      meta: null,
+      reqSchema: null,
+      resSchema: null,
+      err: err instanceof Error ? err : new Error(`未知错误`)
+    }
+  }
+}
+
 const jsttCompileConfigOptions = {
   bannerComment: '',
   style: {
@@ -116,19 +175,6 @@ export function compileJSONSchema2TS(schema: object, name: string) {
   return jstt.compile(schema, name, jsttCompileConfigOptions)
     .then(code => formatComment2SingleLine(code))
     .catch(err => (console.error(err), ''));
-}
-
-/**
- * 解析 YApi 地址
- * @param url
- * @returns
- */
-export function parseYApiUrl(url: string) {
-  const matches = url.match(/\/project\/\d+\/interface\/api\/(\d+)$/);
-  return matches && {
-    prefix: url.replace(matches[0], ''),
-    id: matches[1],
-  }
 }
 
 /**

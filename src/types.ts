@@ -1,4 +1,4 @@
-import { Theme, CopyEventName, EventBusEventName } from './constant';
+import { Theme, EventBusEventName } from './constant';
 
 export type ThemeType =
   /** 暗黑模式 */
@@ -45,4 +45,36 @@ export type EventBusEventMap = {
   [EventBusEventName.THEME_CHANGE]: ThemeType;
   /** storage change event */
   [EventBusEventName.SERVICE_WORKER_MSG]: ServiceWorkerGlobalScopeEventMap['message'];
+}
+
+export type ApiMeta = Record<'method' | 'path' | 'title', string>;
+
+export interface GetApiDataByIdResSuccess {
+  meta: ApiMeta;
+  reqSchema: object;
+  resSchema: object;
+  err: null;
+}
+
+export interface GetApiDataByIdResFailed {
+  meta: null;
+  reqSchema: null;
+  resSchema: null;
+  err: Error;
+}
+
+export interface Message<T = string, D = any> {
+  /** 消息类型 */
+  type: T;
+  /** 消息数据 */
+  data: D;
+}
+
+export interface MessageRes<T = string, D = any> {
+  /** 消息类型 */
+  type: T;
+  /** 消息数据 */
+  data: D | null;
+  /** 错误信息 */
+  err: string | null;
 }

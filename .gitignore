@@ -4,10 +4,12 @@
 # build bundle
 dist
 build
-
+build.zip
+build.crx
+release
 
 # Lock
-package-lock.json
+# package-lock.json
 
 # Logs
 logs

@@ -1,0 +1,66 @@
+# This workflow will do a clean install of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - name: Npm install && build
+      run: |
+        npm i
+        npm run build
+    - name: Chrome Extension upload & publish
+      if: ${{ matrix.node-version == '16.x' }}
+      uses: Passiverecords/chrome-extension-upload-action@1.4.1
+      with:
+        # Auth refresh token
+        refresh-token: ${{ secrets.REFRESH_TOKEN }}
+        # Extension application target id
+        app-id: ${{ secrets.APP_ID }}
+        # Token client id
+        client-id: ${{ secrets.CLIENT_ID }}
+        # Token client secret
+        client-secret: ${{ secrets.CLIENT_SECRET }}
+        # Name of zipped target upload file
+        file-name: build.zip
+        # True Or False to publish after upload
+        publish: false
+    - name: Bundle release
+      run: npm run release
+      if: ${{ matrix.node-version == '16.x' }}
+      env:
+        PRIVATE_KEY: ${{ secrets.FAKE_PRIVATE_KEY }}
+    - name: Upload To Github Release
+      if: ${{ matrix.node-version == '16.x' }}
+      uses: xresloader/upload-to-github-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        file: "release/*.(zip|crx)"
+        delete_file: "*.(zip|crx)"
+        overwrite: true
+        update_latest_release: true
+
+
+

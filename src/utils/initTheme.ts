@@ -1,3 +1,5 @@
+// 仅 popup、options 可用
+
 import { Theme } from '../constant';
 import options from './options';
 

@@ -1,7 +1,7 @@
 {
   "name": "Api2Code",
-  "description": "A Yapi to TypeScript tool.",
-  "version": "0.0.0.4",
+  "description": "An Api doc to code tool.",
+  "version": "0.0.0.6",
   "manifest_version": 3,
   "icons": {
     "16": "assets/images/icon16.png",
@@ -13,8 +13,8 @@
   "permissions": [
     "tabs",
     "activeTab",
-    "notifications",
-    "storage"
+    "storage",
+    "webNavigation"
   ],
   "host_permissions": [
     "*://*\/*"
@@ -27,5 +27,16 @@
   "options_page": "index.html#/options",
   "background": {
     "service_worker": "background.js"
-  }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/project/*/interface/api/*",
+        "*://*/group/*",
+        "*://*/*swagger-ui.html*"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+  }]
 }

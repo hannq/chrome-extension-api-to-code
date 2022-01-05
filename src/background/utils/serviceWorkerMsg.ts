@@ -6,7 +6,7 @@
 declare const self: ServiceWorkerGlobalScope;
 
 import { EventBusEventName } from "@/constant";
-import eventBus from "./eventBus";
+import eventBus from "@/utils/eventBus";
 
 type SWEventHandle = (e: ServiceWorkerGlobalScopeEventMap['message']) => void;
 

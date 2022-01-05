@@ -1,5 +1,6 @@
 .options-wrapper {
   height: 100%;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   .editor-wrapper {
@@ -9,10 +10,8 @@
     margin: 0 14px 14px;
     border: 1px solid ~'var(--@{ant-prefix}-border-color)';
     padding: 11px 0;
-    overflow: auto;
     box-sizing: border-box;
     transition: all 0.3s;
-    overflow: visible;
     &:hover, &.focus {
       border: 1px solid ~'var(--@{ant-prefix}-primary-5)';
       box-shadow: 0 0 0 2px ~'var(--@{ant-prefix}-primary-color-outline)';
