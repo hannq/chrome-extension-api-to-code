@@ -40,7 +40,7 @@ export default defineUserConfig<DefaultThemeOptions>({
       'meta',
       { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
     ],
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
+    ['meta', { name: 'google-site-verification', content: 'i1qnePvMRL6PfrMWQzPoUUoErpMa56ogIhNtNdMSYmo' }],
   ],
 
   // theme and its config
