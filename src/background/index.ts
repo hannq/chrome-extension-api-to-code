@@ -8,7 +8,7 @@ importScripts('lib/parser-babel.js');
 importScripts('lib/prettier-fix.js');
 importScripts('lib/jstt.js');
 
-chrome.runtime.onInstalled.addListener(() => chrome.runtime.openOptionsPage())
+chrome.runtime.onInstalled.addListener((detail) => detail.reason === 'install' && chrome.runtime.openOptionsPage())
 
 ;(async function() {
   newWindowCopyService.open();
