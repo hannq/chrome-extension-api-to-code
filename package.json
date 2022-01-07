@@ -34,7 +34,7 @@
     "react-scripts": "^5.0.0",
     "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.5.4",
-    "vuepress": "^1.9.5"
+    "vuepress": "^2.0.0-beta.32"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",
