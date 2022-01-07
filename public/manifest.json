@@ -1,6 +1,6 @@
 {
   "name": "Api2Code",
-  "description": "An Api doc to code tool.",
+  "description": "一款可以把 Api 文档 转换为 代码 的浏览器插件。",
   "version": "0.0.0.6",
   "manifest_version": 3,
   "icons": {
