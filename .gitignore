@@ -3,10 +3,13 @@
 
 # build bundle
 dist
+docs-dist
 build
 build.zip
 build.crx
 release
+docs/.vuepress/.temp
+docs/.vuepress/.cache
 
 # Lock
 # package-lock.json
