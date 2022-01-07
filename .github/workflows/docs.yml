@@ -23,6 +23,11 @@ jobs:
           # 选择要使用的 node 版本
           node-version: '16'
 
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        run: |
+          echo "::set-output name=dir::$(npm config get cache)"
+
       # 缓存 node_modules
       - name: Cache dependencies
         uses: actions/cache@v2
