@@ -15,7 +15,8 @@ This is a chrome extension help to translate api doc to different programming la
 4. 将 `Api2Code-x.x.x.x.zip` 直接拖入即可完成安装
 
 ## 使用
-`TODO ...`
+
+[见使用文档](https://hannq.github.io/chrome-extension-api-to-code/)
 
 ## TODO LIST:
 - [x] 支持 YApi
