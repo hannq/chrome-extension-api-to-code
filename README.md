@@ -2,7 +2,9 @@
 This is a chrome extension help to translate api doc to different programming language
 
 ## 安装
+
 ### `chrome store` 安装
+
 如果你可以直接打开 `chrome store`，[点击这里](https://chrome.google.com/webstore/detail/api2code/dbbfiofnhjdopgpkoagbdcnccakpjcgo) 或 搜索 `Api2code` 打开插件安装页面进行安装
 
 ### 手动安装
