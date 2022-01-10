@@ -73,9 +73,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         file: "release/*.(zip|crx)"
-        delete_file: "*.(zip|crx)"
         overwrite: true
-        update_latest_release: true
 
 
 
