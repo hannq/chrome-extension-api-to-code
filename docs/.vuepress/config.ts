@@ -2,6 +2,8 @@ import { type DefaultThemeOptions, defineUserConfig } from 'vuepress';
 import { sidebar, navbar } from './configs'
 import { name, description, PUBLIC_URL } from './configs/meta';
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export default defineUserConfig<DefaultThemeOptions>({
   // site config
   base: PUBLIC_URL,
@@ -105,12 +107,23 @@ export default defineUserConfig<DefaultThemeOptions>({
         editLinkText: 'Edit this page on GitHub',
       },
     },
+
+    themePlugins: {
+      // only enable git plugin in production mode
+      git: isProd,
+    },
   },
 
   // common config
   // ...
 
   plugins: [
+    [
+      '@vuepress/plugin-google-analytics',
+      {
+        id: 'G-1ZC2P2X5B8',
+      },
+    ],
     // [
     //   '@vuepress/plugin-docsearch',
     //   {

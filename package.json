@@ -19,6 +19,7 @@
     "@types/lodash.merge": "^4.6.6",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@vuepress/plugin-google-analytics": "^2.0.0-beta.32",
     "archiver": "^5.3.0",
     "babel-plugin-import": "^1.13.3",
     "copy-webpack-plugin": "^10.2.0",

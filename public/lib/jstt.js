@@ -40740,7 +40740,7 @@
   // TODO: default to empty schema (as per spec) instead
   rules.set('Default additionalProperties to true', function (schema) {
       if (isObjectType(schema) && !('additionalProperties' in schema) && schema.patternProperties === undefined) {
-          schema.additionalProperties = true;
+          schema.additionalProperties = false;
       }
   });
   rules.set('Default top level `id`', function (schema, fileName) {
