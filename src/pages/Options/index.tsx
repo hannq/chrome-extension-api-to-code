@@ -35,7 +35,12 @@ const OptionsPage: FC = () => {
         }
       }}
     >
-      <h1>配置页</h1>
+      <h1 styleName="form-title">
+        <span>配置页</span>
+        <Tooltip placement="right" title="使用文档">
+          <a styleName="doc-link" href="https://hannq.github.io/chrome-extension-api-to-code/" target="_blank"><QuestionCircleOutlined /></a>
+        </Tooltip>
+      </h1>
       <Space size={20} styleName="content-wrapper" direction="vertical">
         <Card title="基础配置">
           <Item name={["basic", "theme"]} label="主题">
