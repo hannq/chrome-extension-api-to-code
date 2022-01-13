@@ -1,0 +1,1 @@
+const e={key:"v-e6412400",path:"/en/guide/",title:"\u4ECB\u7ECD",lang:"en-US",frontmatter:{},excerpt:"",headers:[],git:{updatedTime:1641574878e3,contributors:[{name:"NianQi Han",email:"18112417530@163.com",commits:1}]},filePathRelative:"en/guide/README.md"};export{e as data};
