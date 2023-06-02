@@ -14,7 +14,10 @@ const { filesize } = require('filesize');
     ],
     {
       stdio: 'inherit',
-      cwd: path.resolve(__dirname, '..')
+      cwd: path.resolve(__dirname, '..'),
+      env: {
+        TS_NODE_PROJECT: 'tsconfig.node.json'
+      }
     }
   );
 

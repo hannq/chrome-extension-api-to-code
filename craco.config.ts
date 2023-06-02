@@ -52,7 +52,7 @@ module.exports = (): CracoConfig => {
                 },
               ]
             })
-          ])!
+          ], [])!
         );
         return webpackConfig;
       },
