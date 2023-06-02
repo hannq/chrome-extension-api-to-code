@@ -1,6 +1,6 @@
 import { type FC, useRef } from 'react';
 import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Form, Tooltip, Switch, Select, Card, Button, Space, message } from 'antd';
+import { Form, Tooltip, Switch, Select, Card, Button, Space, App } from 'antd';
 import { useMount } from 'ahooks';
 import options from '@/utils/options';
 import { Options } from '@/types';
@@ -10,6 +10,7 @@ import './index.module.less';
 const { Item, useForm } = Form;
 
 const OptionsPage: FC = () => {
+  const { message } = App.useApp();
   const [formInstance] = useForm<Options>();
   const defaultOptsRef = useRef<Options | null>(null);
 
@@ -38,7 +39,7 @@ const OptionsPage: FC = () => {
       <h1 styleName="form-title">
         <span>配置页</span>
         <Tooltip placement="right" title="使用文档">
-          <a styleName="doc-link" href="https://hannq.github.io/chrome-extension-api-to-code/" target="_blank"><QuestionCircleOutlined /></a>
+          <Button type='link' href="https://hannq.github.io/chrome-extension-api-to-code/" target="_blank"><QuestionCircleOutlined /></Button>
         </Tooltip>
       </h1>
       <Space size={20} styleName="content-wrapper" direction="vertical">

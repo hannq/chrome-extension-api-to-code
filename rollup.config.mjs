@@ -1,18 +1,19 @@
 // @ts-check
 
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import ts from 'rollup-plugin-typescript2';
 import json from '@rollup/plugin-json';
 import commonjs from '@rollup/plugin-commonjs';
 import { nodeResolve } from '@rollup/plugin-node-resolve';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 
 // @ts-ignore
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const isPrd = process.env.NODE_ENV === 'production';
 
+/** @type { import('rollup').RollupOptions[] } */
 export default ['background', 'contentScript'].map(name => ({
   input: path.join(__dirname, `src/${name}/index.ts`),
   external: [],
@@ -52,10 +53,10 @@ export default ['background', 'contentScript'].map(name => ({
     file: path.join(__dirname, `build/${name}.js`),
     format: `iife`,
   },
-  onwarn: (msg, warn) => {
-    if (!/Circular/.test(msg)) {
-      warn(msg)
-    }
+  onwarn: (warning, defaultHandler) => {
+    // if (!/Circular/.test(msg)) {
+    //   warn(msg)
+    // }
   },
   treeshake: {
     moduleSideEffects: false

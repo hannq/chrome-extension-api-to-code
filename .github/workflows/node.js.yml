@@ -11,42 +11,42 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - name: Install Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+        node-version: 16
 
-    # 缓存 node_modules
-    - name: Cache dependencies
-      uses: actions/cache@v2
-      id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
+    - uses: pnpm/action-setup@v2
+      name: Install pnpm
+      id: pnpm-install
       with:
-        path: |
-          **/node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        version: 8
+        run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      shell: bash
+      run: |
+        echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
+      with:
+        path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-pnpm-store-
 
-    # 如果缓存没有命中，安装依赖
     - name: Install dependencies
-      if: steps.npm-cache.outputs.cache-hit != 'true'
-      run: npm ci
+      run: pnpm install
 
     - name: Npm build
       run: npm run build
     - name: Chrome Extension upload & publish
-      if: ${{ matrix.node-version == '16.x' }}
       uses: Passiverecords/chrome-extension-upload-action@1.4.1
       with:
         # Auth refresh token
@@ -63,11 +63,9 @@ jobs:
         publish: false
     - name: Bundle release
       run: npm run release
-      if: ${{ matrix.node-version == '16.x' }}
       env:
         PRIVATE_KEY: ${{ secrets.FAKE_PRIVATE_KEY }}
     - name: Upload To Github Release
-      if: ${{ matrix.node-version == '16.x' }}
       uses: xresloader/upload-to-github-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

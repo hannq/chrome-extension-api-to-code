@@ -1,6 +1,6 @@
 import { type FC, useRef, useState } from 'react';
 import { useMount } from 'ahooks';
-import { type Input, message, Button } from 'antd';
+import { type InputRef, App, Button } from 'antd';
 import classnames from 'classnames';
 import Editor, { type Ref as EditorRef } from '@/components/Editor';
 import { isSupportUrl } from '@/utils/urlParser';
@@ -42,8 +42,9 @@ const getCodeByUrl = async (url: string) => {
 }
 
 const Options: FC = () => {
+  const { message } = App.useApp();
   const editorRef = useRef<EditorRef>(null);
-  const searchRef = useRef<Input>(null);
+  const searchRef = useRef<InputRef>(null);
   const [isEditorFucus, setIsEditorFucus] = useState(false);
 
   useMount(async () => {
@@ -56,7 +57,8 @@ const Options: FC = () => {
       const url = tab.url;
       if (url && isSupportUrl(url)) {
         try {
-          searchRef.current?.setValue(url);
+          searchRef.current?.input?.setAttribute('value', url);
+          console.log(url);
           const code = await getCodeByUrl(url);
           editorRef.current?.setValue(code);
           if (autoCopyAfterGenCode) {
@@ -78,7 +80,6 @@ const Options: FC = () => {
           if (!url) return;
           if (url && isSupportUrl(url)) {
             try {
-              searchRef.current?.setValue(url);
               const code = await getCodeByUrl(url);
               editorRef.current?.setValue(code);
               const { basic: { autoCopyAfterGenCode } } = await options.get();

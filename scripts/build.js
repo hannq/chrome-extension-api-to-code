@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require("path");
 const execa = require("execa");
 const archiver = require('archiver');
-const filesize = require('filesize');
+const { filesize } = require('filesize');
 
 ;(async function() {
   await execa(

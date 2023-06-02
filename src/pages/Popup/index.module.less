@@ -8,13 +8,15 @@
     flex: 1;
     min-height: 0;
     margin: 0 14px 14px;
-    border: 1px solid ~'var(--@{ant-prefix}-border-color)';
+    border: 1px solid @color-border;
     padding: 11px 0;
     box-sizing: border-box;
     transition: all 0.3s;
     &:hover, &.focus {
-      border: 1px solid ~'var(--@{ant-prefix}-primary-5)';
-      box-shadow: 0 0 0 2px ~'var(--@{ant-prefix}-primary-color-outline)';
+      border: 1px solid @color-primary-hover;
+    }
+    &.focus {
+      box-shadow: 0 0 0 2px @control-outline;
     }
     .copy-btn {
       position: absolute;

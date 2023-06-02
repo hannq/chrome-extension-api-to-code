@@ -1,10 +1,12 @@
 import { lazy, Suspense, type FC } from 'react';
+import { Spin } from 'antd';
 import { Navigate, RouteObject, useRoutes, /** Outlet, */ } from 'react-router-dom';
+import './index.module.less';
 
 const AsyncComponent: FC<{ component: React.ComponentType }> = (props) => {
   const { component: Component } = props;
   return (
-    <Suspense fallback={<div>loading ...</div>}>
+    <Suspense fallback={<Spin styleName='loading' size='large' />}>
       <Component />
     </Suspense>
   );
@@ -32,17 +34,18 @@ const routeConfig = convertRoutes([
   {
     name: 'options',
     path: '/options',
-    component: () => import('./pages/Options'),
+    component: () => import('@/pages/Options'),
   },
   {
     name: 'popup',
     path: '/popup',
-    component: () => import('./pages/Popup'),
+    component: () => import('@/pages/Popup')
+    // component: () => new Promise(r => r).then(() => import('@/pages/Popup')),
   },
   {
     name: 'copy',
     path: '/copy',
-    component: () => import('./pages/Copy'),
+    component: () => import('@/pages/Copy'),
   },
 ] as MyRouteConfig[]);
 

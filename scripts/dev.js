@@ -26,7 +26,11 @@ const execa = require("execa");
     ],
     {
       stdio: 'inherit',
-      cwd: path.resolve(__dirname, '..')
+      cwd: path.resolve(__dirname, '..'),
+      env: {
+        TS_NODE_PROJECT: 'tsconfig.node.json',
+        PORT: '3002'
+      }
     }
   );
 })();

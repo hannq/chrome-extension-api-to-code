@@ -1,0 +1,26 @@
+{
+  "extends": "@tsconfig/node18/tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "ESNext",
+    "allowJs": true,
+    "outDir": "./build"
+  },
+  "include": [
+    "craco.config.ts",
+    "package.json",
+    "public/*.json",
+    "node.shim.d.ts",
+    "scripts/*.js",
+  ],
+  "exclude": [
+    "./build/**/*"
+  ],
+  "ts-node": {
+    "compilerOptions": {
+      "noImplicitAny": false
+    }
+  }
+}

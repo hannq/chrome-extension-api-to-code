@@ -1,5 +1,5 @@
 import { type ForwardRefRenderFunction, forwardRef } from 'react';
-import { Input } from 'antd';
+import { Input, type InputRef } from 'antd';
 import { SearchProps, } from 'antd/es/input/Search';
 import './index.module.less';
 
@@ -9,7 +9,7 @@ interface Props extends SearchProps {
 
 }
 
-const SearchBar: ForwardRefRenderFunction<Input, Props> = (props, ref) => {
+const SearchBar: ForwardRefRenderFunction<InputRef, Props> = (props, ref) => {
   const { ...rest } = props;
 
   return (

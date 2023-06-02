@@ -1,3 +1,6 @@
+/** antd prefixCls 配置字段 */
+export const ANTD_PREFIX_CLS = 'api-to-code';
+
 export const OPTIONS_STORAGE_KEY = "OPTIONS_STORAGE_KEY";
 /** Html 标签上 theme 标识位的值 */
 export const THEME_ATTRIBUTE_KEY = 'data-theme';
